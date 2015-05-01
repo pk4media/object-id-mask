@@ -23,4 +23,41 @@ describe('String Character Code Tests', function() {
     .equal(testString);
   });
 
+  it('can encode and decode a number but return a string', function() {
+    var testValue = 1;
+
+    expect(StringCharCode.decode(StringCharCode.encode(testValue))).be
+    .equal('1');
+  });
+
+  it('can encode and decode a date but return an iso string', function() {
+    var testValue = new Date(1976, 6, 10, 2, 45, 34, 234);
+
+    expect(StringCharCode.decode(StringCharCode.encode(testValue))).be
+    .equal('1976-07-10T09:45:34.234Z');
+  });
+
+  it('can encode and decode an array but return a comma delimited string', function() {
+    var testValue = ['This is a test!',
+    'Ааа́Ббб́Ввв́ГгҐґДдį໘',
+    1,
+    new Date(1976, 6, 10, 2, 45, 34, 234)];
+
+    expect(StringCharCode.decode(StringCharCode.encode(testValue))).be
+    .equal('This is a test!,Ааа́Ббб́Ввв́ГгҐґДдį໘,1,1976-07-10T09:45:34.234Z');
+  });
+
+  it('can encode and decode an object but return a json string', function() {
+    var testValue = {
+      test1: 'This is a test!',
+      test2: 'Ааа́Ббб́Ввв́ГгҐґДдį໘',
+      test3: 1,
+      test4: new Date(1976, 6, 10, 2, 45, 34, 234)
+    };
+
+    expect(StringCharCode.decode(StringCharCode.encode(testValue))).be
+    .equal('{"test1":"This is a test!","test2":"Ааа́Ббб́Ввв́ГгҐґДдį໘","test3":1,' +
+      '"test4":"1976-07-10T09:45:34.234Z"}');
+  });
+
 });
